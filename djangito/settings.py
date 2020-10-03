@@ -86,7 +86,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 AUTH_USER_MODEL = 'usermodel.User'
-STATICFILES_STORAGE = 'djangito.storage.WhiteNoiseStaticFilesStorage'
+STATICFILES_STORAGE = 'djangito.storages.WhiteNoiseStaticFilesStorage'
 WHITENOISE_USE_FINDERS = True
 if DEBUG:
     WHITENOISE_AUTOREFRESH = True
