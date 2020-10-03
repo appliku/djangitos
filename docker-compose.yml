@@ -1,0 +1,39 @@
+version: '3.3'
+services:
+  redis:
+    image: redis
+  rabbitmq:
+    image: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=djangito
+      - RABBITMQ_DEFAULT_PASS=djangito
+      - RABBITMQ_DEFAULT_VHOST=djangito
+    ports:
+      - "21001:5672"
+      - "21002:15672"
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=djangito
+      - POSTGRES_PASSWORD=djangito
+      - POSTGRES_DB=djangito
+    ports:
+      - "21003:5432"
+  web:
+    build: .
+    restart: always
+    command: python manage.py runserver 0.0.0.0:8060
+    env_file:
+      - .env
+    ports:
+      - "127.0.0.1:8060:8060"
+    volumes:
+      - .:/code
+    links:
+      - db
+      - redis
+      - rabbitmq
+    depends_on:
+      - db
+      - redis
+      - rabbitmq

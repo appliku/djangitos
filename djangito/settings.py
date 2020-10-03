@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'djangoql',
+    'usermodel',
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AUTH_USER_MODEL = 'usermodel.User'
 STATICFILES_STORAGE = 'djangito.storage.WhiteNoiseStaticFilesStorage'
 WHITENOISE_USE_FINDERS = True
 if DEBUG:
