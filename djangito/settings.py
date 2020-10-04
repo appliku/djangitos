@@ -16,29 +16,37 @@ if SENTRY_DSN:
 
     sentry_sdk.init(
         dsn=SENTRY_DSN,
-        integrations=[DjangoIntegration()],
+        integrations=[
+            DjangoIntegration()
+        ],
 
         # If you wish to associate users to errors (assuming you are using
         # django.contrib.auth) you may enable sending PII data.
         send_default_pii=True
     )
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
 
-    # 3rd party
+THRID_PARTY_APPS = [
     'import_export',
     'django_extensions',
     'rest_framework',
     'corsheaders',
     'djangoql',
+]
+
+PROJECT_APPS = [
     'usermodel',
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THRID_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
