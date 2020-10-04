@@ -1,9 +1,6 @@
-import os
-from datetime import timedelta
 from pathlib import Path
 
 import environ
-from kombu import Queue
 
 
 env = environ.Env()
@@ -142,7 +139,6 @@ if SENTRY_DSN:
     from sentry_sdk.integrations.celery import CeleryIntegration
     from sentry_sdk.integrations.redis import RedisIntegration
 
-
     sentry_sdk.init(
         dsn=SENTRY_DSN,
         integrations=[
@@ -157,7 +153,7 @@ if SENTRY_DSN:
     )
 
 # Whitenose Settings
-# WHITENOISE_AUTOREFRESH = DEBUG -> Default behavior. 
+# WHITENOISE_AUTOREFRESH = DEBUG -> Default behavior.
 # http://whitenoise.evans.io/en/stable/django.html#WHITENOISE_AUTOREFRESH
 WHITENOISE_USE_FINDERS = True
 

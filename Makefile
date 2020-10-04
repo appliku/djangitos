@@ -24,5 +24,8 @@ manage-createsuperuser: command=shell -c "from usermodel.models import User; Use
 manage-createsuperuser: manage-python
 csu: manage-createsuperuse
 
+lint:
+	docker-compose run --rm web flake8
+
 bash:
 	docker-compose run --rm web sh

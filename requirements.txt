@@ -27,3 +27,4 @@ django-import-export==2.3.0
 honeybadger==0.4.0
 django-ses==1.0.3
 djangoql==0.14.0
+flake8==3.8.4
