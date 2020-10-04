@@ -20,38 +20,53 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     email = CIEmailField(
-        _('email address'),
-        blank=True,
+        _('Email Address'),
         unique=True,
         error_messages={
             'unique': _("A user with that username already exists."),
-        }, )
-    name = models.CharField(_('name'), max_length=255, blank=True)
+        },
+    )
+
+    first_name = models.CharField(_('First Name'), max_length=255, blank=True)
+    last_name = models.CharField(_('Last Name'), max_length=255, blank=True)
+
     is_staff = models.BooleanField(
-        _('staff status'),
+        _('Staff Status'),
         default=False,
         help_text=_('Designates whether the user can log into this admin site.'),
     )
+
     is_active = models.BooleanField(
-        _('active'),
+        _('Active'),
         default=True,
         help_text=_(
             'Designates whether this user should be treated as active. '
             'Unselect this instead of deleting accounts.'
         ),
     )
-    is_email_confirmed = models.BooleanField(_('email confirmed'), default=False)
-    date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+
+    # Audit Values
+    is_email_confirmed = models.BooleanField(
+        _('Email Confirmed'),
+        default=False
+    )
+    date_joined = models.DateTimeField(
+        _('Daate Joined'),
+        default=timezone.now
+    )
 
     objects = UserManager()
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name']
+    REQUIRED_FIELDS = [
+        'first_name',
+        'last_name'
+    ]
 
     class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
 
     def clean(self):
         super().clean()
@@ -61,11 +76,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         Return the first_name plus the last_name, with a space in between.
         """
-        return self.name.strip()
+        return f"{self.first_name} {self.last_name}"
 
     def get_short_name(self):
         """Return the short name for the user."""
-        return self.name
+        return self.first_name
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
