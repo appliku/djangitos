@@ -7,6 +7,7 @@ from kombu import Queue
 
 
 env = environ.Env()
+
 """
 Project Settings
 """
@@ -93,6 +94,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'djangito.wsgi.application'
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -160,7 +162,7 @@ if SENTRY_DSN:
 WHITENOISE_USE_FINDERS = True
 
 # Redis Settings
-REDIS_URL = env('REDIS_URL')
+REDIS_URL = env('REDIS_URL', default=None)
 
 if REDIS_URL:
     CACHES = {
