@@ -51,7 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=False
     )
     date_joined = models.DateTimeField(
-        _('Daate Joined'),
+        _('Date Joined'),
         default=timezone.now
     )
 
