@@ -44,8 +44,15 @@ THRID_PARTY_APPS = [
     'import_export',
     'django_extensions',
     'rest_framework',
+    'storages',
     'corsheaders',
     'djangoql',
+    'post_office',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'crispy_forms',
 ]
 
 PROJECT_APPS = [
@@ -214,20 +221,13 @@ if CELERY_BROKER_URL:
     )
     CELERY_CREATE_MISSING_QUEUES = True
 
+
 # Debug Toolbar Settings
 def show_toolbar(request):
     """Callback needed for enabling debug_toolbar"""
     _ = request
     return True
 
-
-if DEBUG:
-    INSTALLED_APPS += ['debug_toolbar']
-    MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware'] + MIDDLEWARE
-    DEBUG_TOOLBAR_CONFIG = {
-        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-    }
-    INTERNAL_IPS = ['127.0.0.1']
 
 # AllAuth Settings
 AUTHENTICATION_BACKENDS += [

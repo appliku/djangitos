@@ -9,9 +9,6 @@ celery-redbeat==1.0.0
 pytz==2020.1
 psycopg2-binary==2.8.6
 arrow==0.17.0
-pytest==6.1.1
-pytest-cov==2.10.1
-pytest-django==3.10.0
 djangorestframework==3.12.1
 djangorestframework-simplejwt==4.4.0
 django-environ==0.4.5
@@ -19,7 +16,8 @@ django-storages==1.10.1
 django-cors-headers==3.5.0
 django-braces==1.14.0
 django-extensions==3.0.9
-django-debug-toolbar==3.1.1
+django-post-office==3.4.1
+django-crispy-forms==1.9.2
 django-allauth==0.42.0
 celery==4.4.7
 boto3==1.15.16
