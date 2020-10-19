@@ -19,7 +19,7 @@ django-extensions==3.0.9
 django-post-office==3.4.1
 django-crispy-forms==1.9.2
 django-allauth==0.43.0
-celery==5.0.1
+celery==4.4.7
 boto3==1.15.18
 boto3-stubs==1.15.18.0
 PyYAML==5.3.1
