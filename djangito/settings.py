@@ -282,8 +282,9 @@ POST_OFFICE = {
 }
 
 # AWS SES Settings
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME', default='us-east-2')
-AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT', default='email.us-east-2.amazonaws.com')
-AWS_SES_CONFIGURATION_SET = env('AWS_SES_CONFIGURATION_SET', default='Engagement')
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default=None)
+if AWS_ACCESS_KEY_ID:
+    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+    AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME', default='us-east-2')
+    AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT', default='email.us-east-2.amazonaws.com')
+    AWS_SES_CONFIGURATION_SET = env('AWS_SES_CONFIGURATION_SET', default='Engagement')
