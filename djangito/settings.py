@@ -216,7 +216,7 @@ if CELERY_BROKER_URL:
     CELERY_ACCEPT_CONTENT = ['application/json']
     CELERY_TASK_SERIALIZER = 'json'
     CELERY_RESULT_SERIALIZER = 'json'
-    CELERY_RESULT_BACKEND = env('REDIS_URL', 'redis://localhost:6379/0')
+    CELERY_RESULT_BACKEND = env('REDIS_URL', default='redis://localhost:6379/0')
     CELERY_DEFAULT_QUEUE = 'default'
     CELERY_QUEUES = (
         Queue('default'),
