@@ -176,7 +176,7 @@ if AWS_CLOUDFRONT_DOMAIN and AWS_STORAGE_BUCKET_NAME:
     DEFAULT_FILE_STORAGE = 'djangito.storages.PublicMediaStorage'
     AWS_QUERYSTRING_AUTH = False
 
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='test@example.com')
 
 """
 Third Party Settings
