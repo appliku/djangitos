@@ -203,6 +203,14 @@ if SENTRY_DSN:
         send_default_pii=True
     )
 
+# Honeybadger Settings
+HONEYBADGER_API_KEY = env('HONEYBADGER_API_KEY', default=None)
+if HONEYBADGER_API_KEY:
+    MIDDLEWARE = ['honeybadger.middleware.DjangoHoneybadgerMiddleware'] + MIDDLEWARE
+    HONEYBADGER = {
+        'API_KEY': HONEYBADGER_API_KEY
+    }
+
 # Whitenose Settings
 # WHITENOISE_AUTOREFRESH = DEBUG -> Default behavior.
 # http://whitenoise.evans.io/en/stable/django.html#WHITENOISE_AUTOREFRESH
