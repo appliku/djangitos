@@ -1,0 +1,5 @@
+-r requirements.txt
+pytest==6.1.1
+pytest-cov==2.10.1
+pytest-django==4.0.0
+django-debug-toolbar==3.1.1
