@@ -40,7 +40,7 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-THRID_PARTY_APPS = [
+THIRD_PARTY_APPS = [
     'import_export',
     'django_extensions',
     'rest_framework',
@@ -53,13 +53,15 @@ THRID_PARTY_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'crispy_forms',
+    "ckeditor",
+    "ckeditor_uploader",
 ]
 
 PROJECT_APPS = [
     'usermodel',
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THRID_PARTY_APPS + PROJECT_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -296,3 +298,7 @@ if AWS_ACCESS_KEY_ID:
     AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME', default='us-east-2')
     AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT', default='email.us-east-2.amazonaws.com')
     AWS_SES_CONFIGURATION_SET = env('AWS_SES_CONFIGURATION_SET', default='Engagement')
+
+
+# CKEDITOR Settings
+CKEDITOR_UPLOAD_PATH = "uploads/"
