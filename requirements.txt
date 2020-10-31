@@ -1,11 +1,11 @@
 Django==3.1.2
-Pillow==8.0.0
+Pillow==8.0.1
 gunicorn==20.0.4
 whitenoise==5.2.0
 sentry-sdk==0.19.1
 requests==2.24.0
 django-redis==4.12.1
-celery-redbeat==1.0.0
+celery-redbeat==2.0.0
 pytz==2020.1
 psycopg2-binary==2.8.6
 arrow==0.17.0
@@ -20,8 +20,8 @@ django-post-office==3.4.1
 django-crispy-forms==1.9.2
 django-allauth==0.43.0
 celery==4.4.7
-boto3==1.16.0
-boto3-stubs==1.16.0.0
+boto3==1.16.8
+boto3-stubs==1.16.8.0
 PyYAML==5.3.1
 django-import-export==2.4.0
 honeybadger==0.4.0
