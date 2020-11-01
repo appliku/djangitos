@@ -208,7 +208,7 @@ if SENTRY_DSN:
 # Honeybadger Settings
 HONEYBADGER_API_KEY = env('HONEYBADGER_API_KEY', default=None)
 if HONEYBADGER_API_KEY:
-    MIDDLEWARE = ['honeybadger.middleware.DjangoHoneybadgerMiddleware'] + MIDDLEWARE
+    MIDDLEWARE = ['honeybadger.contrib.DjangoHoneybadgerMiddleware'] + MIDDLEWARE
     HONEYBADGER = {
         'API_KEY': HONEYBADGER_API_KEY
     }
