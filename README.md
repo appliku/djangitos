@@ -1,6 +1,8 @@
 # Djangito
 
-Django Template for Saas projects
+Django Template for Saas projects.
+
+Join our Discord server to get community and maintainers support: https://discord.gg/tZtrpD45TR
 
 ## Set up Process
 
