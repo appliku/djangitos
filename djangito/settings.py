@@ -1,8 +1,6 @@
 from pathlib import Path
 
 import environ
-from kombu import Queue
-
 env = environ.Env()
 
 """
@@ -219,19 +217,23 @@ if HONEYBADGER_API_KEY:
 WHITENOISE_USE_FINDERS = True
 
 # Celery Settings
+try:
+    from kombu import Queue
 
-CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='amqp://localhost')
-if CELERY_BROKER_URL:
-    CELERYD_TASK_SOFT_TIME_LIMIT = 60
-    CELERY_ACCEPT_CONTENT = ['application/json']
-    CELERY_TASK_SERIALIZER = 'json'
-    CELERY_RESULT_SERIALIZER = 'json'
-    CELERY_RESULT_BACKEND = env('REDIS_URL', default='redis://localhost:6379/0')
-    CELERY_DEFAULT_QUEUE = 'default'
-    CELERY_QUEUES = (
-        Queue('default'),
-    )
-    CELERY_CREATE_MISSING_QUEUES = True
+    CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='amqp://localhost')
+    if CELERY_BROKER_URL:
+        CELERYD_TASK_SOFT_TIME_LIMIT = 60
+        CELERY_ACCEPT_CONTENT = ['application/json']
+        CELERY_TASK_SERIALIZER = 'json'
+        CELERY_RESULT_SERIALIZER = 'json'
+        CELERY_RESULT_BACKEND = env('REDIS_URL', default='redis://localhost:6379/0')
+        CELERY_DEFAULT_QUEUE = 'default'
+        CELERY_QUEUES = (
+            Queue('default'),
+        )
+        CELERY_CREATE_MISSING_QUEUES = True
+except ModuleNotFoundError:
+    print("Celery/kombu not installed. Skipping...")
 
 
 # Debug Toolbar Settings
