@@ -1,6 +1,6 @@
 from pathlib import Path
-
 import environ
+import os
 
 env = environ.Env()
 
@@ -37,6 +37,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.redirects',
 ]
 
 THIRD_PARTY_APPS = [
@@ -52,13 +53,10 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'crispy_forms',
-    "ckeditor",
-    "ckeditor_uploader",
 ]
 
 PROJECT_APPS = [
     'usermodel',
-    'ses_sns',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -67,6 +65,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -122,13 +121,6 @@ AUTHENTICATION_BACKENDS = [
 # User Model Definition
 AUTH_USER_MODEL = 'usermodel.User'
 
-# Static files and Media Files Definition
-STATICFILES_STORAGE = 'djangito.storages.WhiteNoiseStaticFilesStorage'
-
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATIC_HOST = env('DJANGO_STATIC_HOST', default='')
-STATIC_URL = STATIC_HOST + '/static/'
-
 TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
@@ -164,46 +156,42 @@ LOGGING = {
     },
 }
 
-# Media Storage
-AWS_CLOUDFRONT_DOMAIN = env('AWS_CLOUDFRONT_DOMAIN', default=None)
-AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME', default=None)
-if AWS_CLOUDFRONT_DOMAIN and AWS_STORAGE_BUCKET_NAME:
-    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-    AWS_DEFAULT_ACL = None
-    AWS_CLOUDFRONT_DOMAIN = env('AWS_CLOUDFRONT_DOMAIN')
-    AWS_S3_CUSTOM_DOMAIN = AWS_CLOUDFRONT_DOMAIN
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-    PUBLIC_MEDIA_LOCATION = 'media'
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
-    DEFAULT_FILE_STORAGE = 'djangito.storages.PublicMediaStorage'
-    AWS_QUERYSTRING_AUTH = False
 
+# Static And Media Settings
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME', default=None)
+if AWS_STORAGE_BUCKET_NAME:
+    AWS_DEFAULT_ACL = None
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN', default=None) or f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=600'}
+
+    # s3 static settings
+    STATIC_LOCATION = 'static'
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+    STATICFILES_STORAGE = 'djangito.storages.StaticStorage'
+
+    # s3 public media settings
+    PUBLIC_MEDIA_LOCATION = 'media'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
+    DEFAULT_FILE_STORAGE = 'djangito.storages.PublicMediaStorage'
+
+    STATICFILES_DIRS = (
+        # os.path.join(BASE_DIR, "static"),
+    )
+else:
+    MIDDLEWARE.insert(2, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    WHITENOISE_USE_FINDERS = True
+    STATIC_HOST = env('DJANGO_STATIC_HOST', default='')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATIC_URL = STATIC_HOST + '/static/'
+    if DEBUG:
+        WHITENOISE_AUTOREFRESH = True
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='test@example.com')
 
 """
 Third Party Settings
 """
-# Sentry Settings
-SENTRY_DSN = env('SENTRY_DSN', default=None)
-
-if SENTRY_DSN:
-    import sentry_sdk
-    from sentry_sdk.integrations.django import DjangoIntegration
-    from sentry_sdk.integrations.celery import CeleryIntegration
-    from sentry_sdk.integrations.redis import RedisIntegration
-
-    sentry_sdk.init(
-        dsn=SENTRY_DSN,
-        integrations=[
-            DjangoIntegration(),
-            CeleryIntegration(),
-            RedisIntegration()
-        ],
-
-        # If you wish to associate users to errors (assuming you are using
-        # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True
-    )
 
 # Honeybadger Settings
 HONEYBADGER_API_KEY = env('HONEYBADGER_API_KEY', default=None)
@@ -213,15 +201,10 @@ if HONEYBADGER_API_KEY:
         'API_KEY': HONEYBADGER_API_KEY
     }
 
-# Whitenose Settings
-# WHITENOISE_AUTOREFRESH = DEBUG -> Default behavior.
-# http://whitenoise.evans.io/en/stable/django.html#WHITENOISE_AUTOREFRESH
-WHITENOISE_USE_FINDERS = True
-
 # Celery Settings
 try:
     from kombu import Queue
-
+    from celery import Celery
     CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='amqp://localhost')
     if CELERY_BROKER_URL:
         CELERYD_TASK_SOFT_TIME_LIMIT = 60
@@ -237,22 +220,12 @@ try:
 except ModuleNotFoundError:
     print("Celery/kombu not installed. Skipping...")
 
-
-# Debug Toolbar Settings
-def show_toolbar(request):
-    """Callback needed for enabling debug_toolbar"""
-    _ = request
-    return True
-
-
 # AllAuth Settings
 AUTHENTICATION_BACKENDS += [
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-ACCOUNT_ADAPTER = 'usermodel.adapters.MyAccountAdapter'
-SOCIALACCOUNT_ADAPTER = 'usermodel.adapters.MySocialAccountAdapter'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
@@ -296,9 +269,7 @@ POST_OFFICE = {
 }
 
 # AWS SES Settings
+
 AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME', default='us-east-1')
 AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT', default='email.us-east-1.amazonaws.com')
 AWS_SES_CONFIGURATION_SET = env('AWS_SES_CONFIGURATION_SET', default=None)
-
-# CKEDITOR Settings
-CKEDITOR_UPLOAD_PATH = "uploads/"
