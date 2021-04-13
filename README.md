@@ -1,4 +1,4 @@
-# Djangito
+# Djangitos
 
 Django Template for Saas projects.
 
@@ -22,7 +22,7 @@ DJANGO_DEBUG=True
 
 ⋅⋅⋅ After all dependencies are installed, this will run `python manage.py migrate`
 
-⋅⋅⋅ Finnally it will create a base Superuser (if None exists) with the following data:
+⋅⋅⋅ Finally it will create a base Superuser (if None exists) with the following data:
 
     ⋅⋅* First Name: Admin
     ⋅⋅* Last Name: User
