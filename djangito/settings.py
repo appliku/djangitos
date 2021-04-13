@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import environ
+
 env = environ.Env()
 
 """
@@ -26,7 +27,7 @@ Django Apps - Django Internal Apps
 Third Party Apps - Apps installed via requirements.txt
 Project Apps - Project owned / created apps
 
-Installed Apps = Django Apps + Thrid Part apps + Projects Apps
+Installed Apps = Django Apps + Third Part apps + Projects Apps
 """
 DJANGO_APPS = [
     'django.contrib.admin',
@@ -57,6 +58,7 @@ THIRD_PARTY_APPS = [
 
 PROJECT_APPS = [
     'usermodel',
+    'ses_sns',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -284,7 +286,7 @@ if SOCIALACCOUNT_PROVIDERS_GOOGLE_CLIENT_ID:
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Django Post Office Settings
-EMAIL_BACKEND = 'post_office.EmailBackend'
+EMAIL_BACKEND = 'ses_sns.backend.FilteringEmailBackend'
 
 POST_OFFICE = {
     'BACKENDS': {
@@ -294,13 +296,9 @@ POST_OFFICE = {
 }
 
 # AWS SES Settings
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default=None)
-if AWS_ACCESS_KEY_ID:
-    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-    AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME', default='us-east-2')
-    AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT', default='email.us-east-2.amazonaws.com')
-    AWS_SES_CONFIGURATION_SET = env('AWS_SES_CONFIGURATION_SET', default='Engagement')
-
+AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME', default='us-east-1')
+AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT', default='email.us-east-1.amazonaws.com')
+AWS_SES_CONFIGURATION_SET = env('AWS_SES_CONFIGURATION_SET', default=None)
 
 # CKEDITOR Settings
 CKEDITOR_UPLOAD_PATH = "uploads/"
