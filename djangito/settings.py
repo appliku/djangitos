@@ -57,6 +57,7 @@ THIRD_PARTY_APPS = [
 
 PROJECT_APPS = [
     'usermodel',
+    'ses_sns',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
