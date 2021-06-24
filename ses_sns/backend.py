@@ -1,10 +1,15 @@
+import logging
 from collections import OrderedDict
 from email.mime.base import MIMEBase
+from email.utils import parseaddr
+
 from django.core.files.base import ContentFile
 from post_office import EmailBackend
 
 from post_office.settings import get_default_priority
 from ses_sns.models import BlacklistedEmail
+
+logger = logging.getLogger(__name__)
 
 
 def filter_blacklisted_recipients(addresses):
