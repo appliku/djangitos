@@ -121,7 +121,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 # User Model Definition
 AUTH_USER_MODEL = 'usermodel.User'
-
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
@@ -156,7 +156,6 @@ LOGGING = {
         },
     },
 }
-
 
 # Static And Media Settings
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME', default=None)
@@ -206,6 +205,7 @@ if HONEYBADGER_API_KEY:
 try:
     from kombu import Queue
     from celery import Celery
+
     CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='amqp://localhost')
     if CELERY_BROKER_URL:
         CELERYD_TASK_SOFT_TIME_LIMIT = 60
