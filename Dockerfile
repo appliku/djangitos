@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8.12-bullseye
 ENV PIP_NO_CACHE_DIR off
 ENV PIP_DISABLE_PIP_VERSION_CHECK on
 ENV PYTHONUNBUFFERED 1
@@ -6,7 +6,7 @@ ENV PYTHONDONTWRITEBYTECODE 0
 ENV COLUMNS 80
 RUN apt-get update \
  && apt-get install -y --force-yes \
- nano python-pip gettext chrpath libssl-dev libxft-dev \
+ nano python3-pip gettext chrpath libssl-dev libxft-dev \
  libfreetype6 libfreetype6-dev  libfontconfig1 libfontconfig1-dev\
   && rm -rf /var/lib/apt/lists/*
 WORKDIR /code/
