@@ -2,7 +2,7 @@
 
 Django Template for Saas projects.
 
-Join our Discord server to get community and maintainers support: https://discord.gg/tZtrpD45TR
+Join our Discord server to get community and maintainers support: https://appliku.com/discord
 
 
 ## Quickstart
