@@ -4,41 +4,42 @@ Django Template for Saas projects.
 
 Join our Discord server to get community and maintainers support: https://discord.gg/tZtrpD45TR
 
-## Set up Process
 
-1. ### Env File Creation
-⋅⋅⋅ Create an env file (`.env`) file in the root of the project with the following content:
+## Quickstart
+Download fresh Djangitos project template, rename the project folder and copy local development `.env` file.
+
+```bash
+curl -sSL https://github.com/appliku/djangitos/archive/refs/heads/master.zip > djangitos.zip
+unzip djangitos.zip
+
+
+mv djangitos-master drfswagger_tutorial
+cd drfswagger_tutorial
+cp start.env .env
+```
+
+Run the project with:
+```bash
+docker-compose up
+```
+
+Apply migrations with:
+```bash
+docker-compose run web python manage.py migrate
+```
+
+Create a super user account:
+```bash
+docker-compose run web python manage.py makesuperuser
+```
+
+The output of the last command will display the login and password for the admin user that was created, like this:
 
 ```
-DATABASE_URL=postgresql://djangito:djangito@db/djangito
-REDIS_URL=redis://redis/0
-DJANGO_SECRET_KEY=123
-DJANGO_DEBUG=True
+admin user not found, creating one
+===================================
+A superuser was created with email admin@example.com and password xLV9i9D7p8bm
+===================================
 ```
 
-2. ### `make build`
-
-⋅⋅⋅ This command will install all the dependencies in [requirements.txt](requirements.txt) with `docker-compose build`.
-
-⋅⋅⋅ After all dependencies are installed, this will run `python manage.py migrate`
-
-⋅⋅⋅ Finally it will create a base Superuser (if None exists) with the following data:
-
-    ⋅⋅* First Name: Admin
-    ⋅⋅* Last Name: User
-    ⋅⋅* Email: admin@example.com
-    ⋅⋅⋅* Password: adminpass
-
-**We Recommend changing the User password once the set up is completed.**
-
----
-
-## Run the project
-
-### `make run`
-
-This command will run `docker-compose up` and will run your django server in the URL: `localhost:8060`.
-
----
-
-More available commands in [Makefile](Makefile)
+Open [http://0.0.0.0:8060/admin/](http://0.0.0.0:8060/admin/) and login with these credentials.
