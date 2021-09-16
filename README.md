@@ -13,8 +13,8 @@ curl -sSL https://github.com/appliku/djangitos/archive/refs/heads/master.zip > d
 unzip djangitos.zip
 
 
-mv djangitos-master drfswagger_tutorial
-cd drfswagger_tutorial
+mv djangitos-master myproject
+cd myproject
 cp start.env .env
 ```
 
