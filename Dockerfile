@@ -11,5 +11,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 WORKDIR /code/
 COPY requirements.txt /code/
+COPY requirements-dev.txt /code/
 RUN pip install -r requirements.txt
+RUN pip install -r requirements-dev.txt
 COPY . /code/
