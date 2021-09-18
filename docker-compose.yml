@@ -2,6 +2,8 @@ version: '3.3'
 services:
   redis:
     image: redis
+    ports:
+      - "6379:6379"
   rabbitmq:
     image: rabbitmq
     environment:
@@ -27,6 +29,40 @@ services:
       - .env
     ports:
       - "127.0.0.1:8060:8060"
+    volumes:
+      - .:/code
+    links:
+      - db
+      - redis
+      - rabbitmq
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+
+  celery:
+    build: .
+    restart: always
+    command: celery -A djangito.celery:app  worker -Q default -n djangito.%%h --without-gossip --without-mingle --without-heartbeat --loglevel=INFO --max-memory-per-child=512000 --concurrency=1
+    env_file:
+      - .env
+    volumes:
+      - .:/code
+    links:
+      - db
+      - redis
+      - rabbitmq
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+
+  celery-beat:
+    build: .
+    restart: always
+    command: celery -A djangito.celery:app beat -S redbeat.RedBeatScheduler  --loglevel=DEBUG --pidfile /tmp/celerybeat.pid
+    env_file:
+      - .env
     volumes:
       - .:/code
     links:
