@@ -266,6 +266,7 @@ POST_OFFICE = {
     'BACKENDS': {
         'default': 'django_ses.SESBackend',
     },
+    'CELERY_ENABLED': True,
     'DEFAULT_PRIORITY': 'now',
 }
 
