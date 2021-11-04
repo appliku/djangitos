@@ -53,6 +53,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'crispy_forms',
+    'tailwind',
 ]
 
 PROJECT_APPS = [
