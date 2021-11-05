@@ -59,6 +59,7 @@ THIRD_PARTY_APPS = [
 PROJECT_APPS = [
     'usermodel',
     'ses_sns',
+    'theme',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -276,3 +277,7 @@ POST_OFFICE = {
 AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME', default='us-east-1')
 AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT', default='email.us-east-1.amazonaws.com')
 AWS_SES_CONFIGURATION_SET = env('AWS_SES_CONFIGURATION_SET', default=None)
+
+
+# Django Tailwind Settings
+TAILWIND_APP_NAME = 'theme'
