@@ -40,6 +40,25 @@ services:
       - redis
       - rabbitmq
 
+  tailwind:
+    build: .
+    restart: always
+    command: python manage.py tailwind start
+    env_file:
+      - .env
+    ports:
+      - "127.0.0.1:8383:8383"
+    volumes:
+      - .:/code
+    links:
+      - db
+      - redis
+      - rabbitmq
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+
   celery:
     build: .
     restart: always

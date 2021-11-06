@@ -28,7 +28,7 @@ Apply migrations with:
 docker-compose run web python manage.py migrate
 ```
 
-Create a super user account:
+Create a superuser account:
 ```bash
 docker-compose run web python manage.py makesuperuser
 ```
@@ -43,3 +43,11 @@ A superuser was created with email admin@example.com and password xLV9i9D7p8bm
 ```
 
 Open [http://0.0.0.0:8060/admin/](http://0.0.0.0:8060/admin/) and login with these credentials.
+
+
+## Tailwind
+`Django-tailwind` is included. Hot-reload is disabled, but when `tailwind` docker-compose process is running it will
+update the styles.css file when .html files are updated.
+
+In order to set up tailwind for local development you should run `docker-compose run web python manage.py tailwind install`
+
