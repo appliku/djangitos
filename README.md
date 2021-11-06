@@ -48,3 +48,6 @@ Open [http://0.0.0.0:8060/admin/](http://0.0.0.0:8060/admin/) and login with the
 ## Tailwind
 `Django-tailwind` is included. Hot-reload is disabled, but when `tailwind` docker-compose process is running it will
 update the styles.css file when .html files are updated.
+
+In order to set up tailwind for local development you should run `docker-compose run web python manage.py tailwind install`
+
