@@ -1,6 +1,6 @@
 # Djangitos
 
-Django Template for Saas projects.
+Django Project Template.
 
 Join our Discord server to get community and maintainers support: https://appliku.com/discord
 

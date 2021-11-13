@@ -1,9 +1,12 @@
 import os
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangito.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+os.environ.setdefault('DJANGO_CONFIGURATION', 'ProjectConfig')
+import configurations
 
-app = Celery('djangito')
+configurations.setup()
+app = Celery('project')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 app.conf.redbeat_redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
