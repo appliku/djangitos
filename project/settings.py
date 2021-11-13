@@ -2,6 +2,10 @@ from configurations import values
 
 from djangitos.settings import BaseConfig
 
+# Temporary solution to make sure Django picks up the default auto_field.
+# Model checks are performed before django-configurations are instantiated
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 class ProjectConfig(BaseConfig):
     SOCIALACCOUNT_GOOGLE_CLIENT_ID = values.Value()
