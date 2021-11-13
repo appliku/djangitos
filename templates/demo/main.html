@@ -1,3 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Djangitos{% endblock %}
+{% block title %}Free Django Project Template{% endblock %}
+{% block extra_head %}
+    <meta name="description" content='Free Django Project Template'>
+{% endblock %}
+{% block content %}
+    {% include "demo/components/hello.html" %}
+{% endblock %}

@@ -12,7 +12,7 @@ module.exports = {
      * Set mode to "jit" if you want to generate your styles on-demand as you author your templates;
      * Set mode to "aot" if you want to generate the stylesheet in advance and purge later (aka legacy mode).
      */
-    mode: "jit",
+    mode: "aot",
 
     purge: [
         /**
