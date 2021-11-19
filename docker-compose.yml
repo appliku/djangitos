@@ -47,7 +47,7 @@ services:
     env_file:
       - .env
     ports:
-      - "127.0.0.1:8383:8383"
+      - "0.0.0.0:8383:8383"
     volumes:
       - .:/code
     links:
