@@ -47,7 +47,7 @@ services:
     env_file:
       - .env
     ports:
-      - "0.0.0.0:8383:8383"
+      - "127.0.0.1:8383:8383"
     volumes:
       - .:/code
     links:
@@ -62,7 +62,7 @@ services:
   celery:
     build: .
     restart: always
-    command: celery -A project.celeryapp:app  worker -Q default -n djangitos.%%h --without-gossip --without-mingle --without-heartbeat --loglevel=INFO --max-memory-per-child=512000 --concurrency=1
+    command: celery -A project.celeryapp:app  worker -Q default -n djangitos.%%h --loglevel=INFO --max-memory-per-child=512000 --concurrency=1
     env_file:
       - .env
     volumes:
@@ -80,6 +80,25 @@ services:
     build: .
     restart: always
     command: celery -A project.celeryapp:app beat -S redbeat.RedBeatScheduler  --loglevel=DEBUG --pidfile /tmp/celerybeat.pid
+    env_file:
+      - .env
+    volumes:
+      - .:/code
+    links:
+      - db
+      - redis
+      - rabbitmq
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+
+  celery-flower:
+    build: .
+    restart: always
+    command: celery -A project.celeryapp:app flower --loglevel=DEBUG --port=9090 --basic_auth=djangitos:testpassword
+    ports:
+      - "127.0.0.1:9090:9090"
     env_file:
       - .env
     volumes:
