@@ -8,6 +8,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 class ProjectConfig(BaseConfig):
+    PROJECT_APPS = BaseConfig.PROJECT_APPS + [
+        # add your apps here
+    ]
     SOCIALACCOUNT_GOOGLE_CLIENT_ID = values.Value()
     SOCIALACCOUNT_GOOGLE_CLIENT_SECRET = values.Value()
 
