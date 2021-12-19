@@ -222,7 +222,7 @@ class BaseConfig(Configuration):
     CELERY_TASK_SERIALIZER = 'json'
     CELERY_RESULT_SERIALIZER = 'json'
     CELERY_RESULT_BACKEND = REDIS_URL
-    CELERY_DEFAULT_QUEUE = 'default'
+    CELERY_TASK_DEFAULT_QUEUE = 'default'
     CELERY_CREATE_MISSING_QUEUES = True
 
     # Django All Auth Settings
