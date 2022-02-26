@@ -13,7 +13,7 @@ class Command(BaseCommand):
                     is_superuser=True).exists():
                 print("admin user not found, creating one")
                 email = 'admin@example.com'
-                new_password = get_random_string()
+                new_password = get_random_string(10)
 
                 u = User.objects.create_superuser(email, new_password)
                 print(f"===================================")
